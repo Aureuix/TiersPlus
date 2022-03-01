@@ -373,8 +373,9 @@ namespace TiersPlus
             EntityInfo TestProjEnemy = new EntityInfo(EntityType.COMMON, testProjEnemy).Register("testProjEnemy");
             manaPack4Item.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 2);
             powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
-
-
+            //reminder to destroy the goblin thing's 5head hitbox
+            UnityEngine.Object.Destroy(testProjEnemy.transform.Find("e").Find("b").Find("Cube"));
+                
             testProjEnemy.transform.Find("e").Find("b").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/PlasmaCaster/spongeHead"),
@@ -411,6 +412,7 @@ namespace TiersPlus
             plasmaDragonGravityBall.isGood = false; //this is false, all plasma dragons are good girls
             plasmaDragonGravityBall.isBurn = 50;
             GadgetCoreAPI.AddCustomResource("proj/PlasmaDragonBall", plasmaDragonBall);
+            //reminder to destroy the plasma dragon wings
 
             GameObject lavadragonPrefab = GadgetCoreAPI.GetEntityResource("lavadragon");
             lavadragonPrefab.SetActive(false);
@@ -420,6 +422,8 @@ namespace TiersPlus
             {
                 m.gameObject.ReplaceComponent<Millipede, PlasmaDragonScript>();
             }
+            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("-").Find("XP_8BTFireA_1A_0000 (2)"));
+            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("- (1)").Find("XP_8BTFireA_1A_0000 (1)"));
             EntityInfo plasmaDragonInfo = new EntityInfo(EntityType.BOSS, plasmaDragon).Register("PlasmaDragon");
 
             plasmaDragon.transform.Find("0").Find("GameObject").Find("wormHead").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
@@ -436,6 +440,7 @@ namespace TiersPlus
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Enemies/ParticleDragon/lavadragonwing2.png"),
             };
+            
             plasmaDragon.transform.Find("2").Find("-").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Enemies/ParticleDragon/lavadragonwing.png"),
