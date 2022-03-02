@@ -375,8 +375,8 @@ namespace TiersPlus
             powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
             //reminder to destroy the goblin thing's 5head hitbox
             var box = testProjEnemy.GetComponent<BoxCollider>();
-            box.size = new Vector3(2, (float)4.3, 1);
-            box.center = new Vector3(0, (float)-1.5, 0);
+            box.size = new Vector3(2, 4.3f, 1);
+            box.center = new Vector3(0, -1.6f, 0);
 
             testProjEnemy.transform.Find("e").Find("b").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {

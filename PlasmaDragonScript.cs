@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using GadgetCore.API;
+using System.Collections;
 
 namespace TiersPlus
 {
@@ -35,7 +36,7 @@ namespace TiersPlus
         {
 			if (isMainHead)
             {
-				Initialize(60000, 20, 1000 + GameScript.challengeLevel * 500, true, true, true);
+				Initialize(45000, 20, 5000 + GameScript.challengeLevel * 500, true, true, true);
             }
 			else
             {
@@ -43,7 +44,8 @@ namespace TiersPlus
             }
             MaxFollowDistance = 5;
             BurnEffect = 50;
-		}
+            StartCoroutine(Balls());
+        }
 
         protected void Update()
         {
@@ -111,10 +113,9 @@ namespace TiersPlus
 
         protected void BurstBalls()
         {
-            GetComponent<NetworkView>().RPC("Au", RPCMode.All);
+            GetComponent<NetworkView>().RPC("Au", RPCMode.All); 
             GetComponent<NetworkView>().RPC("RPCBurstBalls", RPCMode.All);
         }
-
         [RPC]
         protected void RPCBurstBalls()
         {
@@ -127,7 +128,45 @@ namespace TiersPlus
             Instantiate(GadgetCoreAPI.GetProjectileResource("PlasmaDragonBall"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, 0).normalized, SendMessageOptions.DontRequireReceiver);
             Instantiate(GadgetCoreAPI.GetProjectileResource("PlasmaDragonBall"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, 1).normalized, SendMessageOptions.DontRequireReceiver);
         }
+        
+        [RPC]
+        protected void RPCPassiveBalls(int type) {
+            if (type == 1)
+            {
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(0, 1).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(1, 0).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, 0).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(0, -1).normalized, SendMessageOptions.DontRequireReceiver);
 
+            }
+            if (type == 2) {
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(1, -1).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, -1).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, 1).normalized, SendMessageOptions.DontRequireReceiver);
+                Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(-1, 1).normalized, SendMessageOptions.DontRequireReceiver);
+
+            }
+            if (type == 3) {
+                int rand = Random.RandomRange(0, 5);
+                for (int i = 0; i < rand; i++) {
+                    Instantiate(GadgetCoreAPI.GetProjectileResource("proj/wyvern"), transform.position, Quaternion.identity).SendMessage("InitDir", new Vector3(Random.RandomRange(-1, 1), Random.RandomRange(-1, 1)).normalized, SendMessageOptions.DontRequireReceiver);
+                }
+            }
+        }
+        //"proj/wyvernCustom"
+        IEnumerator Balls() {
+            while (HP >= MaxHP / 2) {
+                yield return new WaitForSeconds(5f);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls(1)", RPCMode.All);
+                yield return new WaitForSeconds(0.5f);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls(2)", RPCMode.All);
+
+            }
+            while (HP <= MaxHP / 2) {
+                yield return new WaitForSeconds(2.5f);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls(3)", RPCMode.All);
+            }
+        }
         [RPC]
         protected void Au()
         {
