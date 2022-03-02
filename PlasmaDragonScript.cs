@@ -35,7 +35,7 @@ namespace TiersPlus
         {
 			if (isMainHead)
             {
-				Initialize(30000, 20, 1000 + GameScript.challengeLevel * 500, true, true, true);
+				Initialize(60000, 20, 1000 + GameScript.challengeLevel * 500, true, true, true);
             }
 			else
             {

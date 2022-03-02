@@ -374,8 +374,10 @@ namespace TiersPlus
             manaPack4Item.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 2);
             powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
             //reminder to destroy the goblin thing's 5head hitbox
-            UnityEngine.Object.Destroy(testProjEnemy.transform.Find("e").Find("b").Find("Cube"));
-                
+            var box = testProjEnemy.GetComponent<BoxCollider>();
+            box.size = new Vector3(2, (float)4.3, 1);
+            box.center = new Vector3(0, (float)-1.5, 0);
+
             testProjEnemy.transform.Find("e").Find("b").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/PlasmaCaster/spongeHead"),
@@ -402,7 +404,7 @@ namespace TiersPlus
 
 
 
-            GameObject plasmaDragonBall = GadgetCoreAPI.GetProjectileResource("blaze");
+            GameObject plasmaDragonBall = GadgetCoreAPI.GetProjectileResource("wyvern");
             plasmaDragonBall.name = "PlasmaDragonBall";
             plasmaDragonBall.SetActive(false);
             GravityBallScript plasmaDragonGravityBall = plasmaDragonBall.ReplaceComponent<Projectile, GravityBallScript>();
@@ -422,8 +424,8 @@ namespace TiersPlus
             {
                 m.gameObject.ReplaceComponent<Millipede, PlasmaDragonScript>();
             }
-            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("-").Find("XP_8BTFireA_1A_0000 (2)"));
-            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("- (1)").Find("XP_8BTFireA_1A_0000 (1)"));
+            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("-").Find("XP_8BTFireA_1A_0000 (2)").gameObject);
+            UnityEngine.Object.Destroy(plasmaDragon.transform.Find("2").Find("- (1)").Find("XP_8BTFireA_1A_0000 (1)").gameObject);
             EntityInfo plasmaDragonInfo = new EntityInfo(EntityType.BOSS, plasmaDragon).Register("PlasmaDragon");
 
             plasmaDragon.transform.Find("0").Find("GameObject").Find("wormHead").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
