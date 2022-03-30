@@ -36,7 +36,7 @@ namespace TiersPlus
         {
 			if (isMainHead)
             {
-				Initialize(45000, 20, 5000 + GameScript.challengeLevel * 500, true, true, true);
+				Initialize(45000, 60, 5000 + GameScript.challengeLevel * 500, true, true, true);
             }
 			else
             {
@@ -156,15 +156,15 @@ namespace TiersPlus
         //"proj/wyvernCustom"
         IEnumerator Balls() {
             while (HP >= MaxHP / 2) {
-                yield return new WaitForSeconds(5f);
-                GetComponent<NetworkView>().RPC("RPCPassiveBalls(1)", RPCMode.All);
+                yield return new WaitForSeconds(1.5f);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls", RPCMode.All, 1);
                 yield return new WaitForSeconds(0.5f);
-                GetComponent<NetworkView>().RPC("RPCPassiveBalls(2)", RPCMode.All);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls", RPCMode.All, 2);
 
             }
-            while (HP <= MaxHP / 2) {
-                yield return new WaitForSeconds(2.5f);
-                GetComponent<NetworkView>().RPC("RPCPassiveBalls(3)", RPCMode.All);
+            while (HP < MaxHP / 2) {
+                yield return new WaitForSeconds(0.75f);
+                GetComponent<NetworkView>().RPC("RPCPassiveBalls", RPCMode.All, 3);
             }
         }
         [RPC]

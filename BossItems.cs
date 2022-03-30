@@ -37,7 +37,7 @@ namespace BossPlus
                     new CraftMenuInfo.AdvancedRecipeComponent(new Item(HiveEye.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
                     )
           ));
-            ItemInfo ScarabTooth = new ItemInfo(ItemType.GENERIC, "Scarab Tooth", "A tooth from a rock scarab. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("ScarabTooth.png")).Register();
+            ItemInfo ScarabTooth = new ItemInfo(ItemType.GENERIC, "Scarab Tooth", "A tooth from a rock scarab. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("ScarabTeeth.png")).Register();
             ScarabTooth.AddToLootTable("entity:scarab", 1.0f, 10, 30);
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
                 new CraftMenuInfo.AdvancedRecipe(

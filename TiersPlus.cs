@@ -1,5 +1,6 @@
 using GadgetCore.API;
 using GadgetCore.Util;
+using GadgetCore.Loader;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace TiersPlus
         private static readonly FieldInfo attacking = typeof(PlayerScript).GetField("attacking", BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly FieldInfo hyper = typeof(PlayerScript).GetField("hyper", BindingFlags.NonPublic | BindingFlags.Instance);
         public static ItemInfo NebulaCannon;
+        TileInfo loreKeeperTile;
         ItemInfo PlasmaCannon;
         ItemInfo MykonogreToken;
         ItemInfo FellbugToken;
@@ -124,6 +126,8 @@ namespace TiersPlus
             NexusHelmet.Register("NexusHelmet");
             PlasmaShield = new ItemInfo(ItemType.OFFHAND, "Nexus Shield", "", GadgetCoreAPI.LoadTexture2D("items/NexusShield"), Stats: new EquipStats(5, 3, 3, 3, 3, 8), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NexusShield"));
             PlasmaShield.Register("NexusShield");
+            ItemInfo CarbonHelm = new ItemInfo(ItemType.HELMET, "Carbon Fibre Visor", "Nanomachines son...", GadgetCoreAPI.LoadTexture2D("items/CarbonHead"), Stats: new EquipStats(500, 500, 500, 500, 500, 500), HeadTex: GadgetCoreAPI.LoadTexture2D("Items/CarbonHead"));
+            CarbonHelm.Register("CarbonHelm");
             ItemInfo NexusShield = new ItemInfo(ItemType.OFFHAND, "Plasmatic Shield", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"), Stats: new EquipStats(7, 5, 5, 5, 5, 5), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"));
             NexusShield.Register("Plasmahield");
             //equipment
@@ -284,6 +288,22 @@ namespace TiersPlus
 
             });
 
+            int loreKQuest = PreviewLabs.PlayerPrefs.GetInt("loreKQuest", 0);
+            PreviewLabs.PlayerPrefs.SetInt("loreKQuest", loreKQuest);
+            GameObject loreKeeper = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetNPCResource("ringabolt"));
+            loreKeeperTile = new  TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("npcs/lkbody"), loreKeeper).Register("Lorekeeper");
+            loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkhead.png"),
+            };
+            loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkbody.png"),
+            };
+
+
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
             GameObject ParticleDragon = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("wicked"));
             ParticleDragon.name = "particleWyvern";
             UnityEngine.Object.Destroy(ParticleDragon.GetComponent<Wicked>());
@@ -401,10 +421,25 @@ namespace TiersPlus
             plasmaPassive.ReplaceComponent<BlastbugScript, PlasmaPassiveScript>();
             EntityInfo plasmaBug = new EntityInfo(EntityType.COMMON, plasmaPassive).Register("plasmaPassive");
             powerCrystalItem.AddToLootTable("entity:plasmaBug", 0.5f, 0, 4);
+            plasmaPassive.transform.Find("e").Find("blastbug").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/BlastBug/caterspikebody"),
+            };
+            plasmaPassive.transform.Find("e").Find("blastbug").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/BlastBug/caterspikeleg"),
+            };
+            plasmaPassive.transform.Find("e").Find("blastbug").Find("Plane_002").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/BlastBug/caterspikeleg"),
+            };
+            plasmaPassive.transform.Find("e").Find("blastbug").Find("Plane_003").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/BlastBug/caterspikeleg"),
+            };
 
 
-
-            GameObject plasmaDragonBall = GadgetCoreAPI.GetProjectileResource("wyvern");
+            GameObject plasmaDragonBall = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetProjectileResource("blaze"));
             plasmaDragonBall.name = "PlasmaDragonBall";
             plasmaDragonBall.SetActive(false);
             GravityBallScript plasmaDragonGravityBall = plasmaDragonBall.ReplaceComponent<Projectile, GravityBallScript>();
@@ -623,6 +658,15 @@ namespace TiersPlus
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             yield return new WaitForSeconds(0.2f);
+        }
+        public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.buildIndex == 1)
+            {
+
+                UnityEngine.Object.Instantiate(loreKeeperTile.Prop, new Vector2(-220f, 0.49f), Quaternion.identity);
+
+            }
         }
     }
 }
