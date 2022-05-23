@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using RecipeMenuCore;
 using RecipeMenuCore.API;
+using GadgetCore.API.Dialog;
 
 namespace TiersPlus
 {
@@ -213,7 +214,7 @@ namespace TiersPlus
 
             ItemInfo TydusRing = new ItemInfo(ItemType.RING, "Tydus Ring", "", GadgetCoreAPI.GetItemMaterial(909), Stats: new EquipStats(0, 0, 3, 3, 0, 0)).Register(909);
             ItemInfo OwainPearl = new ItemInfo(ItemType.RING, "Owain's Pearl", "", GadgetCoreAPI.LoadTexture2D("Items/OwainPearl"), Stats: new EquipStats(2, 1, 1, 1, 1, 1)).Register("OwainRing", 908);
-            ItemInfo VaatiBadge = new ItemInfo(ItemType.RING, "Vaati Badge", "", GadgetCoreAPI.GetItemMaterial(910), Stats: new EquipStats(2, 0, 2, 0, 2, 1)).Register(910);
+            ItemInfo VaatiBadge = new ItemInfo(ItemType.RING, "Vaati's Badge", "", GadgetCoreAPI.GetItemMaterial(910), Stats: new EquipStats(2, 0, 2, 0, 2, 1)).Register("VaatiRing", 910);
 
             healthPack4Item.OnUse += (slot) =>
             {
@@ -235,7 +236,7 @@ namespace TiersPlus
             {
                 InstanceTracker.GameScript.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/drink"), Menuu.soundLevel / 10f);
                 InstanceTracker.GameScript.RecoverStamina(100);
-                InstanceTracker.GameScript.StartCoroutine(EnergyPackSpeedBoost(15, 10));
+                InstanceTracker.GameScript.StartCoroutine(EnergyPackSpeedBoost(15, 10));    
                 return true;
             };
 
@@ -257,18 +258,18 @@ namespace TiersPlus
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), fernEmblemItem.GetID(), lightingEmblemItem.GetID() }, new Item(NexusArmor.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { lightingEmblemItem.GetID(), fernEmblemItem.GetID(), powerEmblemItem.GetID() }, new Item(NexusShield.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), energiteEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(plantain.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
-            GadgetCoreAPI.AddCreationMachineRecipe(powerEmblemItem.GetID(), new Item(1030, 1, 0, 0, 0, new int[3], new int[3]));
-            GadgetCoreAPI.AddCreationMachineRecipe(energiteEmblemItem.GetID(), new Item(909, 1, 0, 0, 0, new int[3], new int[3]));
-            GadgetCoreAPI.AddCreationMachineRecipe(fernEmblemItem.GetID(), new Item(908, 1, 0, 0, 0, new int[3], new int[3]));
-            GadgetCoreAPI.AddCreationMachineRecipe(lightingEmblemItem.GetID(), new Item(910, 1, 0, 0, 0, new int[3], new int[3]));
+            GadgetCoreAPI.AddCreationMachineRecipe(powerEmblemItem.GetID(), new Item(1030, 1, 0, 3, 0, new int[3], new int[3]));
+            GadgetCoreAPI.AddCreationMachineRecipe(energiteEmblemItem.GetID(), new Item(909, 1, 0, 3, 0, new int[3], new int[3]));
+            GadgetCoreAPI.AddCreationMachineRecipe(fernEmblemItem.GetID(), new Item(908, 1, 0, 3, 0, new int[3], new int[3]));
+            GadgetCoreAPI.AddCreationMachineRecipe(lightingEmblemItem.GetID(), new Item(910, 1, 0, 3, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(21, 31, 11), new Item(64, 1, 0, 0, 0, new int[3], new int[3]), 3);
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(32, 22, 12), new Item(68, 1, 0, 0, 0, new int[3], new int[3]), 3);
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(33, 23, 13), new Item(69, 1, 0, 0, 0, new int[3], new int[3]), 3);
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(34, 24, 14), new Item(63, 1, 0, 0, 0, new int[3], new int[3]), 3);
-            GadgetCoreAPI.AddEmblemRecipe(powerEmblemItem.GetID(), powerCrystalItem.GetID(), 10);
-            GadgetCoreAPI.AddEmblemRecipe(lightingEmblemItem.GetID(), lightingBugItem.GetID(), 10);
-            GadgetCoreAPI.AddEmblemRecipe(plasmaFernItem.GetID(), plasmaFernItem.GetID(), 10);
-            GadgetCoreAPI.AddEmblemRecipe(energiteEmblemItem.GetID(), energiteItem.GetID(), 10);
+            GadgetCoreAPI.AddEmblemRecipe(powerCrystalItem.GetID(), powerEmblemItem.GetID(), 10);
+            GadgetCoreAPI.AddEmblemRecipe(lightingBugItem.GetID(), lightingEmblemItem.GetID(), 10);
+            GadgetCoreAPI.AddEmblemRecipe(plasmaFernItem.GetID(), fernEmblemItem.GetID(), 10);
+            GadgetCoreAPI.AddEmblemRecipe(energiteItem.GetID(), energiteEmblemItem.GetID(), 10);
             //crafting recipes
 
             ObjectInfo EnergiteOre = new ObjectInfo(ObjectType.ORE, new Item(energiteItem.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 1, GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Energite")).Register("TestObject");
@@ -287,20 +288,38 @@ namespace TiersPlus
 
 
             });
-
+            
+            Material lkPortrait = new Material(Shader.Find("Unlit/Transparent"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/portraitLorekeeper.png"),
+                mainTextureScale = new Vector2(0.5f, 1)
+            
+            
+            };
+            
+            
+            
             int loreKQuest = PreviewLabs.PlayerPrefs.GetInt("loreKQuest", 0);
             PreviewLabs.PlayerPrefs.SetInt("loreKQuest", loreKQuest);
             GameObject loreKeeper = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetNPCResource("ringabolt"));
-            loreKeeperTile = new  TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("npcs/lkbody"), loreKeeper).Register("Lorekeeper");
+            loreKeeper.name = "Lorekeeper";
+            loreKeeperTile = new TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("npcs/lkbody"), loreKeeper).Register("Lorekeeper");
+            loreKeeperTile.OnInteract += loreKeeperTile.InitiateDialogRoutine;
+            //lorekeeper nothing found dialogue
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => true, "There is nothing to see here, Cadet.", "Perhaps you messed with the save file?", "(if you see this message something went wrong! contact Aure!)");
+
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkhead.png"),
+                
             };
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkbody.png"),
+                
             };
-
+            
+            
 
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -645,6 +664,10 @@ namespace TiersPlus
                 InstanceTracker.PlayerScript.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/plague"), Menuu.soundLevel / 10f);
                 }
             }
+            yield break;
+        }
+        IEnumerator logNPCDialog(String NPC) {
+            Logger.Log("NPC " + NPC + "'s Dialogue is working fine!");
             yield break;
         }
         IEnumerator TripleShot(PlayerScript script)
