@@ -236,7 +236,7 @@ namespace TiersPlus
             {
                 InstanceTracker.GameScript.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/drink"), Menuu.soundLevel / 10f);
                 InstanceTracker.GameScript.RecoverStamina(100);
-                InstanceTracker.GameScript.StartCoroutine(EnergyPackSpeedBoost(15, 10));    
+                InstanceTracker.GameScript.StartCoroutine(EnergyPackSpeedBoost(15, 10));
                 return true;
             };
 
@@ -288,17 +288,17 @@ namespace TiersPlus
 
 
             });
-            
+
             Material lkPortrait = new Material(Shader.Find("Unlit/Transparent"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/portraitLorekeeper.png"),
                 mainTextureScale = new Vector2(0.5f, 1)
-            
-            
+
+
             };
-            
-            
-            
+
+
+
             int loreKQuest = PreviewLabs.PlayerPrefs.GetInt("loreKQuest", 0);
             PreviewLabs.PlayerPrefs.SetInt("loreKQuest", loreKQuest);
             GameObject loreKeeper = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetNPCResource("ringabolt"));
@@ -306,8 +306,12 @@ namespace TiersPlus
             loreKeeperTile = new TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("npcs/lkbody"), loreKeeper).Register("Lorekeeper");
             loreKeeperTile.OnInteract += loreKeeperTile.InitiateDialogRoutine;
             //lorekeeper nothing found dialogue
-            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => true, "There is nothing to see here, Cadet.", "Perhaps you messed with the save file?", "(if you see this message something went wrong! contact Aure!)");
-
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, null, "There is nothing to see here, Cadet.", "Perhaps you messed with the save file?", "(if you see this message something went wrong! contact Aure!)");
+            //lorekeeper quest part 1
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { 
+                return PlayerPrefs.GetInt("LoreKQuest") == 0;
+                }, "You. Cadet. Could you do me a favor quickly?", "Can you see how my armor's long since rusted up?", "I need you to go to the Desolate Canyon and slay Urugorak. The acid under his scales does wonders for an aching joint...", "Upon your return i can use the remaining acid and the rest of the scale to power a machine that can turn loot such as that scale back into their constituent parts.", new DialogMessage("It will surely prove useful to you...", () => PlayerPrefs.SetInt("LoreKQuest", 1)));
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { return PlayerPrefs.GetInt("LoreKQuest") == 1; }, "Take your time Cadet, I can wait...");
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkhead.png"),
