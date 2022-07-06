@@ -117,7 +117,7 @@ namespace TiersPlus
             PlasmaLance.Register("PlasmaLance");
             PlasmaLance.OnAttack += PlasmaLance.ThrustLance;
             //plasmalance
-            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmorinv"), Stats: new EquipStats(7, 4, 8, 4, 8, 4), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmor"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
+            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmorinv"), Stats: new EquipStats(8, 4, 8, 4, 8, 4), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmor"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
             PlasmaArmor.Register("PlasmaArmor");
             PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(8, 4, 4, 8, 4, 8), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
             PlasmaHelmet.Register("PlasmaHelmet");
@@ -205,7 +205,88 @@ namespace TiersPlus
                 GadgetCoreAPI.LoadTexture2D("Items/PowerEmblem")).Register("poweremblem");
             ItemInfo lightingEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.BUG | ItemType.TIER7, "Lightning Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
                 GadgetCoreAPI.LoadTexture2D("Items/LightningEmblem")).Register("lightningemblem");
+            
+            ItemInfo UrugorakScale = new ItemInfo(ItemType.GENERIC, "Urugorak Scale", "A scale from Urugorak. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("Scale.png")).Register();
+            UrugorakScale.AddToLootTable("entity:millipede", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(31, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(21, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(11, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(UrugorakScale.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
 
+            ItemInfo HiveEye = new ItemInfo(ItemType.GENERIC, "Hivemind Eye", "An eye from The Hivemind. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("HiveEye.png")).Register();
+            HiveEye.AddToLootTable("entity:hivemind", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(13, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(31, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(11, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(HiveEye.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo ScarabTooth = new ItemInfo(ItemType.GENERIC, "Scarab Tooth", "A tooth from a rock scarab. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("ScarabTeeth.png")).Register();
+            ScarabTooth.AddToLootTable("entity:scarab", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(1, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(2, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(11, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(ScarabTooth.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo BullySpore = new ItemInfo(ItemType.GENERIC, "Bully Spore", "A spore from a Shroom Bully. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("BullySpore.png")).Register();
+            BullySpore.AddToLootTable("entity:bully", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(12, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(22, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(32, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(BullySpore.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo AncientCore = new ItemInfo(ItemType.GENERIC, "Ancient Core", "A core from a Golem. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("AncientCore.png")).Register();
+            AncientCore.AddToLootTable("entity:golem", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(3, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(5, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(23, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(AncientCore.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo PlagueSpike = new ItemInfo(ItemType.GENERIC, "Plague Spike", "A spike from a plaguebeast. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("PlagueSpike.png")).Register();
+            PlagueSpike.AddToLootTable("entity:plaguebeast", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(4, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(33, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(14, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(PlagueSpike.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo LiquidFire = new ItemInfo(ItemType.GENERIC, "Liquid Fire", "Fire from a Lava Dragon \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("LiquidFire.png")).Register();
+            LiquidFire.AddToLootTable("entity:lavadragon", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(5, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(25, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(34, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(LiquidFire.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
+            ItemInfo BriarLeaf = new ItemInfo(ItemType.GENERIC, "Briar Leaf", "A leaf from Moloch \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("BriarLeaf.png")).Register();
+            BriarLeaf.AddToLootTable("entity:moloch", 1.0f, 1, 7);
+            ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
+                new CraftMenuInfo.AdvancedRecipe(
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(15, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(24, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(35, 5, 0, 0, 0, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.OUTPUT, 10),
+                    new CraftMenuInfo.AdvancedRecipeComponent(new Item(BriarLeaf.GetID(), 1, 1, 1, 1, new int[3], new int[3]), CraftMenuInfo.AdvancedRecipeComponentType.CORE_INPUT)
+                    )
+          ));
             ItemInfo plasmaTracerItem = new ItemInfo(ItemType.CONSUMABLE, "Plasma Tracer", "Grants 3 portal uses to\nThe Plasma Zone.",
                 GadgetCoreAPI.LoadTexture2D("Items/PlasmaTracer"), 32).Register();
 
@@ -288,7 +369,20 @@ namespace TiersPlus
 
 
             });
-
+            ItemInfo overgrownFabricatorItem = new ItemInfo(ItemType.GENERIC, "Overgrown Fabricator", "Deconstructs boss loot \n into its parts.", GadgetCoreAPI.LoadTexture2D("tiles/aficon.png")).Register("overgrownFabricator");
+            GameObject overgrownFabricatorObject = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetPlaceableNPCResource(2104));
+            overgrownFabricatorObject.name = "overgrownFabricator";
+            TileInfo overgrownFabricator = new TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("tiles/ancientfabricator.png"),overgrownFabricatorObject, overgrownFabricatorItem).Register("overgrownFabricatorPlaced");
+            
+            overgrownFabricatorObject.GetComponentInChildren<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("tiles/ancientfabricator"),
+            };
+            CraftMenuInfo overgrownFabricatorMenu = new CraftMenuInfo("Overgrown Fabricator", "Breaks down Boss Loot into smaller parts",
+                GadgetCoreAPI.LoadTexture2D("Tiles/OFMenu/menu_tex"), GadgetCoreAPI.LoadTexture2D("Tiles/OFMenu/bar_tex"),
+                GadgetCoreAPI.LoadTexture2D("Tiles/OFMenu/button0_tex"), GadgetCoreAPI.LoadTexture2D("Tiles/OFMenu/button1_tex"), GadgetCoreAPI.LoadTexture2D("Tiles/OFMenu/button2_tex"),
+                GadgetCoreAPI.LoadAudioClip("Tiles/OFMenu/craft_au"), null, overgrownFabricator);
+            overgrownFabricatorMenu.Register("OFMenu");
             Material lkPortrait = new Material(Shader.Find("Unlit/Transparent"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/portraitLorekeeper.png"),
@@ -311,7 +405,10 @@ namespace TiersPlus
             DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { 
                 return PlayerPrefs.GetInt("LoreKQuest") == 0;
                 }, "You. Cadet. Could you do me a favor quickly?", "Can you see how my armor's long since rusted up?", "I need you to go to the Desolate Canyon and slay Urugorak. The acid under his scales does wonders for an aching joint...", "Upon your return i can use the remaining acid and the rest of the scale to power a machine that can turn loot such as that scale back into their constituent parts.", new DialogMessage("It will surely prove useful to you...", () => PlayerPrefs.SetInt("LoreKQuest", 1)));
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => DialogActions.)
             DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { return PlayerPrefs.GetInt("LoreKQuest") == 1; }, "Take your time Cadet, I can wait...");
+            
+            
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkhead.png"),
@@ -319,7 +416,7 @@ namespace TiersPlus
             };
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
-                mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkbody.png"),
+                mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkbody.png"),   
                 
             };
             
@@ -629,10 +726,15 @@ namespace TiersPlus
             Vector3 vector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             PackPlasma value = new PackPlasma(num, vector);
             GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(Resources.Load("proj/plasma"), script.shot.transform.position, Quaternion.identity);
+            gameObject.GetComponentInChildren<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("items/NebulaBomb"),
+                mainTextureScale = new Vector2(0.5f, 1)
+            };
             gameObject.SendMessage("Plasma2", value);
             script.GetComponent<NetworkView>().RPC("ShootSpecial", RPCMode.Others, new object[]
             {
-        1001,
+        1001,   
         vector,
         num
             });
