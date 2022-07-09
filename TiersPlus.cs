@@ -205,7 +205,7 @@ namespace TiersPlus
                 GadgetCoreAPI.LoadTexture2D("Items/PowerEmblem")).Register("poweremblem");
             ItemInfo lightingEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.BUG | ItemType.TIER7, "Lightning Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
                 GadgetCoreAPI.LoadTexture2D("Items/LightningEmblem")).Register("lightningemblem");
-            
+
             ItemInfo UrugorakScale = new ItemInfo(ItemType.GENERIC, "Urugorak Scale", "A scale from Urugorak. \n Used to craft materials", GadgetCoreAPI.LoadTexture2D("Scale.png")).Register();
             UrugorakScale.AddToLootTable("entity:millipede", 1.0f, 1, 7);
             ((CraftMenuInfo)MenuRegistry.Singleton["Tiers+:OFMenu"]).AddCraftPerformer(CraftMenuInfo.CreateAdvancedCraftPerformer(
@@ -372,8 +372,8 @@ namespace TiersPlus
             ItemInfo overgrownFabricatorItem = new ItemInfo(ItemType.GENERIC, "Overgrown Fabricator", "Deconstructs boss loot \n into its parts.", GadgetCoreAPI.LoadTexture2D("tiles/aficon.png")).Register("overgrownFabricator");
             GameObject overgrownFabricatorObject = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetPlaceableNPCResource(2104));
             overgrownFabricatorObject.name = "overgrownFabricator";
-            TileInfo overgrownFabricator = new TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("tiles/ancientfabricator.png"),overgrownFabricatorObject, overgrownFabricatorItem).Register("overgrownFabricatorPlaced");
-            
+            TileInfo overgrownFabricator = new TileInfo(TileType.INTERACTIVE, GadgetCoreAPI.LoadTexture2D("tiles/ancientfabricator.png"), overgrownFabricatorObject, overgrownFabricatorItem).Register("overgrownFabricatorPlaced");
+
             overgrownFabricatorObject.GetComponentInChildren<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("tiles/ancientfabricator"),
@@ -402,13 +402,23 @@ namespace TiersPlus
             //lorekeeper nothing found dialogue
             DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, null, "There is nothing to see here, Cadet.", "Perhaps you messed with the save file?", "(if you see this message something went wrong! contact Aure!)");
             //lorekeeper quest part 1
-            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { 
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => {
                 return PlayerPrefs.GetInt("LoreKQuest") == 0;
-                }, "You. Cadet. Could you do me a favor quickly?", "Can you see how my armor's long since rusted up?", "I need you to go to the Desolate Canyon and slay Urugorak. The acid under his scales does wonders for an aching joint...", "Upon your return i can use the remaining acid and the rest of the scale to power a machine that can turn loot such as that scale back into their constituent parts.", new DialogMessage("It will surely prove useful to you...", () => PlayerPrefs.SetInt("LoreKQuest", 1)));
-            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => DialogActions.)
+            }, "You. Cadet. Could you do me a favor quickly?", "Can you see how my armor's long since rusted up?", "I need you to go to the Desolate Canyon and slay Urugorak. The acid under his scales does wonders for an aching joint...", "Upon your return i can use the remaining acid and the rest of the scale to power a machine that can turn loot such as that scale back into their constituent parts.", new DialogMessage("It will surely prove useful to you...", () => PlayerPrefs.SetInt("LoreKQuest", 1)));
+            DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, DialogConditions.HasItem(UrugorakScale.GetID()),
+                    new DialogMessage(DialogActions.BranchDialog(new DialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { return PlayerPrefs.GetInt("LoreKQuest") == 1; },
+                            "Wow, your flag is 1! Epic!"
+                    ))),
+                    new DialogMessage(DialogActions.BranchDialog(new DialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => {return PlayerPrefs.GetInt("LoreKQuest") == 1; },
+                            "Wow, your flag is 2! Awesome!"
+                    ))),
+                    "Aww, your flag is unrecognized :("
+            );
+
+
             DialogChains.RegisterDialogChain(loreKeeperTile.GetID(), "The Lorekeeper", lkPortrait, (b) => { return PlayerPrefs.GetInt("LoreKQuest") == 1; }, "Take your time Cadet, I can wait...");
-            
-            
+
+            DialogConditions.HasItem(UrugorakScale.GetID());
             loreKeeper.transform.Find("e").Find("ringabolt").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("Npcs/lkhead.png"),
